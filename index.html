@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swinburnes Test Of Dc Shunt Motor</title>
+    <style>
+        body {
+            padding: 25px;
+            background-color: white;
+            color: black;
+            font-size: 15px;
+            background: var(--primary-color);
+            transition: background 2s;
+        }
+
+        .dark-mode {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="text-align: center;" class="container col-xs-12 col-md-4">
+        <h1 style="font-size: 2em;">Swinburnes Calculator (Motor) <span><button class="btn btn-dark badge badge-dark "
+                    style="    margin-left: 101px;
+            font-size: 12px;" onclick="myFunction()">Dark mode</button></span> </h1>
+        <div class="inpSection">
+            <div class="amt">
+                <label for="VL">VL</label>
+                <input type="number" name="VL" id="VL" placeholder="Enter VL Value In Name Plate"
+                    style="margin: 2%; margin-left: 6%;">
+            </div>
+            <div class="time">
+                <label for="IL">IL</label>
+                <input type="number" name="IL" id="IL" placeholder="Enter IL Value"
+                    style="margin: 2%;margin-left: 7%; ">
+            </div>
+            <div class="rate">
+                <label for="Ish">Ish</label>
+                <input type="number" name="Ish" id="Ish" placeholder="Enter Ish Value"
+                    style="margin: 2%;margin-left: 5%;">
+            </div>
+            <div class="rate">
+                <label for="Ra">Ra</label>
+                <input type="number" name="Ra" id="Ra" placeholder="Enter Ra value" style="margin: 2%;margin-left: 6%;">
+            </div>
+            <div class="rate">
+                <label for="Load">Load</label>
+                <input type="number" name="Load" id="Load" placeholder="Enter Load value In Name Plate" style="margin: 2%;">
+            </div>
+            <div class="rate">
+                <label for="noLoad">VL</label>
+                <input type="number" name="noLoad" id="noLoad" placeholder="Enter NoLoad VL value" style ="margin:2%; margin-left: 6%">
+            </div>
+            <div class="button">
+                <button class="btn btn-success" onclick="Calculate()" style="margin: 2%;
+                text-align: center;
+                ;
+                margin-top: 5%;">Calculate</button>
+            
+            <button class= "btn btn-danger"  style="margin: 2%;
+                text-align: center;
+                ;
+                margin-top: 5%;" onclick="refreshPage()">Reset All</button>
+            </div>
+<script>
+function refreshPage(){
+window. location. reload();
+}
+</script>
+            <div class="result" style="margin-top: 30px;">
+                <h3 id="si"></h3>
+                <h3 id="wv"></h3>
+                <h3 id="Ip"></h3>
+                <h3 id="Wc"></h3>
+                <h3 id="toloss"></h3>
+
+                <h3 id="Oppower"></h3>
+                <h3 id="Eff"></h3>
+            </div>
+        </div>
+        <hr style="height:1px;border:none;color:#333;background-color:#333;" />
+        <p style="    text-align: center;
+        margin-top: 30px;">Copyright ©️ 2021 AJB</p>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+<script>
+    function Calculate() {
+        let vl = document.getElementById('VL').value;
+        let il = document.getElementById('IL').value;
+        let ish = document.getElementById('Ish').value;
+        let ra = document.getElementById('Ra').value;
+        let ld = document.getElementById('Load').value;
+        let vlo = document.getElementById('noLoad').value;
+
+        let SI = (vl * ld)
+
+        document.getElementById('si').innerHTML = "O/P : " + SI;
+        var Iao = (ld+ish);
+console.log(Iao)
+var WV = (Math.pow(Iao, 2) * ra)
+
+
+document.getElementById('wv').innerHTML = "Wv : " + WV;
+        let IP = (vl * il)
+
+        document.getElementById('Ip').innerHTML = "No Load I/P Power : " + IP;
+        var ip21 = (vl*il)
+        var WcIa = (il - ish)
+        var WvIa = (Math.pow(WcIa, 2) * ra)
+        var Wc = (IP - WvIa)
+        document.getElementById('Wc').innerHTML = "Wc : " + Wc;
+        var TLoss = (WV + Wc)
+        document.getElementById('toloss').innerHTML = " Total Loss : " + TLoss;
+        var OP = (SI + TLoss)
+        document.getElementById('Oppower').innerHTML = "Input Power : " + OP;
+        var ef = (SI / OP) * 100
+        document.getElementById('Eff').innerHTML = " η % : " + ef;
+    }
+
+</script>
+<script>
+    function myFunction() {
+        var element = document.body;
+        element.classList.toggle("dark-mode");
+    }
+</script>
+
+</html>
